@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythos University - Interspecies Protection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+        }
+        
+        header .logo {
+          display: flex;
+          align-items: center;
+        }
+
+        header .logo img {
+            height: 250px; /* Adjust the size as needed */
+            margin-right: 15px; /* Adds space between the logo and text */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            display: flex; /* Using flex for header layout */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 4px 2px -2px gray;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        /* --- Navigation Dropdown Menu Styles --- */
+        nav {
+            position: relative; /* Positioning context for the dropdown */
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default */
+            list-style-type: none;
+            position: absolute;
+            top: calc(100% + 15px); /* Position it below the header with some space */
+            right: 0;
+            background: #154575; /* MODIFIED: Slightly lighter color to stand out */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 280px;
+            padding: 10px 20px;
+        }
+
+        .nav-links.active {
+            display: block; /* Show menu when active */
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links li:not(:last-child) {
+            border-bottom: 1px solid #4a627a; /* Adjusted border for new background */
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links li a::after { /* Underline hover effect */
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f1c40f;
+            transition: width 0.3s;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Styling for the theme switcher inside the menu */
+        .theme-switch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background-image: url('https://files.catbox.moe/8m1e8a.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            padding: 140px 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #f1c40f; 
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            border: 2px solid #f1c40f;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #d4ac0d;
+            border-color: #d4ac0d;
+        }
+        
+        .cta-button.secondary {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Secondary CTA Button Style */
+        .cta-button.secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+        .cta-button.secondary:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+
+        /* Main Content Wrapper */
+        main.container {
+            display: block; /* Override header's flex settings */
+        }
+
+        /* Main Sections */
+        section {
+            padding: 60px 20px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .history-segment, .subclause-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .history-item, .subclause-item {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            flex-basis: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        .history-item h3, .subclause-item h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Admissions */
+        .admissions {
+            background-color: #ecf0f1;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 0;
+        }
+
+        /* --- NEW: Sub-clause Page & Accordion Styles --- */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 42px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .accordion {
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+        }
+
+        .accordion-item {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border-radius */
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            font-weight: bold;
+            font-size: 20px;
+            color: #2c3e50;
+            transition: background-color 0.3s;
+        }
+
+        .accordion-header:hover {
+            background-color: #f1f1f1;
+        }
+
+        .accordion-header .icon {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .accordion-content-inner {
+            padding: 25px;
+        }
+
+        .accordion-item.active .accordion-header {
+            background-color: #ecf0f1;
+        }
+
+        .accordion-content h3 {
+            font-family: 'Merriweather', serif;
+            color: #154575;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .accordion-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .accordion-content ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 10px;
+        }
+
+        .accordion-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 50px 0 20px 0;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 20px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Merriweather', serif;
+            color: #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+
+        footer .social-media a {
+            margin-right: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        footer .social-media a:hover {
+            color: #f1c40f;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #3e5167;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Dark Mode Toggle Switch */
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+        }
+        input:checked + .slider {
+            background-color: #f1c40f;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* --- Dark Mode Styles --- */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode header, body.dark-mode footer {
+            background-color: #1a1a2e;
+        }
+        body.dark-mode .nav-links {
+            background-color: #2c3e50; /* MODIFIED: Lighter color for dark mode dropdown */
+        }
+        body.dark-mode .nav-links li:not(:last-child) {
+            border-bottom: 1px solid #3e5167; /* Adjusted for new background */
+        }
+        body.dark-mode .history-item, body.dark-mode .subclause-item {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            border: 1px solid #333;
+        }
+        body.dark-mode section {
+            border-bottom: 1px solid #333;
+        }
+        body.dark-mode section h2 {
+            color: #f1c40f;
+        }
+        body.dark-mode .history-item h3, body.dark-mode .subclause-item h3 {
+            color: #f1c40f;
+        }
+        body.dark-mode .admissions {
+            background-color: #1e1e1e;
+        }
+        body.dark-mode nav ul li a {
+            color: #e0e0e0;
+        }
+        body.dark-mode nav ul li a:hover, body.dark-mode footer .social-media a:hover {
+            color: #f1c40f;
+        }
+        body.dark-mode .footer-bottom {
+            border-top: 1px solid #333;
+        }
+        
+        /* NEW: Dark Mode for Accordion Page */
+        body.dark-mode .page-header {
+            border-bottom: 1px solid #333;
+        }
+        body.dark-mode .page-header h1 {
+            color: #f1c40f;
+        }
+        body.dark-mode .page-header p {
+            color: #bdc3c7;
+        }
+        body.dark-mode .accordion-item {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .accordion-header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        body.dark-mode .accordion-header:hover {
+            background-color: #34495e;
+        }
+        body.dark-mode .accordion-item.active .accordion-header {
+            background-color: #3e5167;
+        }
+        body.dark-mode .accordion-content {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        body.dark-mode .accordion-content h3 {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://files.catbox.moe/wp3bhg.png" alt="Mythos University Logo">
+                <h1>Mythos University</h1>
+            </div>
+            <nav>
+                <button class="menu-toggle" id="menu-toggle-button" aria-label="Open navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-links-list">
+                    <li><a href="#history">Monstrous History</a></li>
+                    <li><a href="#act">Preservation Act</a></li>
+                    <li><a href="#subclauses">Protection Sub-clauses</a></li>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li>
+                        <div class="theme-switch-container">
+                            <span>Dark Mode</span>
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <div class="page-header">
+            <h1>Interspecies Protection Sub-clause</h1>
+            <p>This page details the punitive system for conflicts instigated by humanoid biases. It ensures that any damages—whether discrimination, injury, or death—arising from mistreatment between humans and non-humans face legal consequences. Punishments are determined on a case-by-case basis across five classes of violations.</p>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Class 1: Verbal Offenses</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Class 1 violations are the least severe, exclusively involving verbal abuse. This includes bigotry, species-related insults, slurs, and non-violent harassment or petty threats.</p>
+                        <h3>Human Offenses</h3>
+                        <ul>
+                            <li><strong>Punishment:</strong> Financial restitution.</li>
+                            <li><strong>Fine Range:</strong> $1,000 to $8,000.</li>
+                            <li><strong>First-time Offender Fine:</strong> $1,000 to $1,250.</li>
+                            <li><strong>Prison for Repeat Offenders (3+ violations):</strong> 3 months to 1 year.</li>
+                        </ul>
+                        <h3>Non-Human Offenses</h3>
+                        <ul>
+                            <li><strong>Punishment:</strong> Financial restitution.</li>
+                            <li><strong>Fine Range:</strong> $100 to $2,000.</li>
+                            <li><strong>First-time Offender Fine:</strong> $100 to $250.</li>
+                            <li><strong>Prison for Repeat Offenders (5+ violations):</strong> 3 months to 1 year.</li>
+                            <li><strong>On Probation for Prior Class 2-4 Offense:</strong> 2-20 years (mortal) or 20-200+ years (immortal/long-lived).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Class 2: Non-Violent Stalking & Harassment</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>This class covers stalking for physical, romantic, or platonic reasons that are non-violent in nature. Punishments are heightened if the stalking involves physical signs like property damage or breaking and entering.</p>
+                        <h3>Human & Non-Human Offenses</h3>
+                        <ul>
+                            <li><strong>Punishment:</strong> Financial restitution and a probationary period.</li>
+                            <li><strong>Fine Range:</strong> $300 to $2,500.</li>
+                            <li><strong>First-time Offender Fine:</strong> $300 to $450.</li>
+                            <li><strong>Prison for Repeat Offenders (2+ prior offenses):</strong> 3 months to 1 year.</li>
+                            <li><strong>On Probation for Prior Class 3-4 Offense (Non-Human only):</strong> 5-25 years in prison.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Class 3: Minor to Moderate Physical Harm</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Class 3 involves inflicting minor-to-moderate physical harm without premeditation. Injuries include bruising, cuts, welts, and sprains that require medical treatment.</p>
+                        <h3>General Punishments (First-time Offense)</h3>
+                        <ul>
+                            <li><strong>Fine Range:</strong> $5,000 to $8,000.</li>
+                            <li><strong>Prison Time:</strong> 1 to 2 years.</li>
+                            <li><strong>Probation Period:</strong> 2 to 3 years.</li>
+                        </ul>
+                        <h3>Modifiers for Repeat Offenders</h3>
+                        <ul>
+                            <li><strong>General Repeat Offense:</strong> Fines from $5,000-$20,000, 1-5 years prison, and 2-5 years probation.</li>
+                            <li><strong>Prior Class 3-4 Offenses:</strong> Fines from $10,000-$20,000, 5-50 years prison, and 3-6 years probation.</li>
+                            <li><strong>If Offender Has a Prior Class 5 Violation:</strong> Fines up to $100,000 and 15 years to life in prison.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Class 4: Severe Harm & Involuntary Manslaughter</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>This class covers premeditated violence causing moderate injuries, unplanned violence causing severe injuries (broken bones, head trauma, burns, amputation), and involuntary manslaughter.</p>
+                        <h3>Punishments for Severe Injury</h3>
+                        <ul>
+                            <li><strong>Prison Time:</strong> 10 to 20 years.</li>
+                            <li><strong>Bail Range:</strong> $50,000 to $75,000.</li>
+                            <li><strong>Probation Period:</strong> 5 to 10 years.</li>
+                        </ul>
+                        <h3>Punishments for Involuntary Manslaughter</h3>
+                        <ul>
+                            <li><strong>Prison Time:</strong> 25 to 50 years (no bail).</li>
+                            <li><strong>Probation Period:</strong> 10 to 12 years post-release.</li>
+                        </ul>
+                        <h3>Plea of Insanity</h3>
+                        <ul>
+                            <li><strong>Sentence:</strong> 10-25 years in a guarded mental institution.</li>
+                            <li><strong>Post-Release:</strong> Lifelong weekly counseling, weekly wellness checks, and 10 years probation.</li>
+                            <li><strong>Contingency:</strong> Instigators deemed unfit for release will remain institutionalized.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Class 5: Premeditated Murder & Mass Casualty</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>The most severe class. This includes premeditated murder of 3+ individuals, unplanned murder of 6+ individuals, or any murder involving torture or excessive cruelty. Punishments are severe and handled with utmost gravity.</p>
+                        <h3>Human Offenses</h3>
+                        <ul>
+                            <li><strong>Sentence:</strong> 40 years to life in prison without parole, with the potential for the death penalty.</li>
+                            <li><strong>Release:</strong> Rare, but possible after 35-50 years for exceptional personal growth. Involves lifelong probation.</li>
+                            <li><strong>Mentally Unwell:</strong> Sent to a high-security mental institution for life, with mandatory medication and therapy.</li>
+                        </ul>
+                        <h3>Non-Human Offenses</h3>
+                        <ul>
+                            <li><strong>Sentence:</strong> The equivalent of 30-50 human years in a species-specific high-security prison. Death penalty is less common.</li>
+                            <li><strong>Containment:</strong> Medication is used to subdue and weaken inmates to prevent aggression.</li>
+                            <li><strong>Release:</strong> Similar conditions to humans, requiring significant personal growth. Lifelong probation upon release.</li>
+                            <li><strong>Mentally Unwell:</strong> Confined to a species-specific mental institution for life with specialized diets and care.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Special Provisions & Case Considerations</span>
+                    <span class="icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Certain factors require special legal consideration due to the unique biological and societal differences between species.</p>
+                        <h3>Age & Lifespan Adjustments</h3>
+                        <ul>
+                            <li>Sentences for non-humans with lifespans significantly different from humans are scaled to be equivalent in severity. For example, a 50-year sentence for a human might translate to a 500-year sentence for a species with a 1000-year lifespan.</li>
+                        </ul>
+                        <h3>Inhibitory Control (e.g., Shifters)</h3>
+                        <ul>
+                            <li>Non-humans who commit murder while in a shifted state where inhibitions are uncontrollable are handled differently. The case focuses on accountability, containment, and management of their condition rather than purely punitive measures.</li>
+                        </ul>
+                          <h3>Non-Human Dietary Needs (e.g., Vampires)</h3>
+                        <ul>
+                            <li>For species that require sustenance from humanoids, such as vampires, Mythos University has a strict but fair system in place. We provide a regulated and ethical source of nutrition through official channels, including blood banks supplied by willing donors and synthetic options. This is the only acceptable way to meet these dietary needs on campus.</li>
+                            <li>If a student bypasses this system and causes harm, the case is handled differently from other offenses. Instead of a standard prison sentence, the individual will be permanently housed in a secure residence with others of their kind. These facilities are designed to safely manage residents who cannot control their predatory instincts, providing for their needs while guaranteeing they are no longer a threat to the public. The focus is on humane containment and management, not just punishment.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-section">
+                <h3>About Mythos University</h3>
+                <p>The premier institution for the education and integration of all humanoid species. We foster understanding, knowledge, and coexistence.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Prospective Students</a></li>
+                    <li><a href="#">Current Students</a></li>
+                    <li><a href="#">Faculty & Staff</a></li>
+                    <li><a href="#">Campus Safety</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">General Inquiries</a></li>
+                    <li><a href="#">Admissions Office</a></li>
+                    <li><a href="#">Legal Department</a></li>
+                    <li><a href="#">Emergency Line</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mythos University. All Rights Reserved. | Interspecies harmony is a condition of enrollment.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Dropdown Menu Script ---
+        const menuToggle = document.getElementById('menu-toggle-button');
+        const navLinks = document.getElementById('nav-links-list');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close the menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                   navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // --- Dark Mode Functionality ---
+        const toggleSwitch = document.querySelector('#checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleSwitch.checked = true;
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggleSwitch.checked = false;
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        if (currentTheme) {
+            setTheme(currentTheme);
+        } else { // Default to light theme
+            setTheme('light');
+        }
+
+        toggleSwitch.addEventListener('change', function(e) {
+            if(e.target.checked) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        });
+
+        // --- NEW: Accordion Functionality ---
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            const icon = item.querySelector('.icon');
+
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all other items
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                        otherItem.querySelector('.icon').textContent = '+';
+                    }
+                });
+
+                // Toggle the clicked item
+                if (isActive) {
+                    item.classList.remove('active');
+                    content.style.maxHeight = null;
+                    icon.textContent = '+';
+                } else {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.textContent = '−';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
