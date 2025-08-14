@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythos University</title>
+    <style>
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+        }
+        
+        header .logo {
+          display: flex;
+          align-items: center;
+        }
+
+        header .logo img {
+            height: 250px; /* Adjust the size as needed */
+            margin-right: 15px; /* Adds space between the logo and text */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            display: flex; /* Using flex for header layout */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 4px 2px -2px gray;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        /* --- Navigation Dropdown Menu Styles --- */
+        nav {
+            position: relative; /* Positioning context for the dropdown */
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default */
+            list-style-type: none;
+            position: absolute;
+            top: calc(100% + 15px); /* Position it below the header with some space */
+            right: 0;
+            background: #154575; /* MODIFIED: Slightly lighter color to stand out */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 280px;
+            padding: 10px 20px;
+        }
+
+        .nav-links.active {
+            display: block; /* Show menu when active */
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links li:not(:last-child) {
+            border-bottom: 1px solid #4a627a; /* Adjusted border for new background */
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links li a::after { /* Underline hover effect */
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #f1c40f;
+            transition: width 0.3s;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Styling for the theme switcher inside the menu */
+        .theme-switch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background-image: url('https://files.catbox.moe/8m1e8a.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            padding: 140px 20px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #f1c40f; 
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            border: 2px solid #f1c40f;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #d4ac0d;
+            border-color: #d4ac0d;
+        }
+        
+        .cta-button.secondary {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Secondary CTA Button Style */
+        .cta-button.secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+        .cta-button.secondary:hover {
+            background-color: white;
+            color: #2c3e50;
+        }
+
+        /* Main Content Wrapper */
+        main.container {
+            display: block; /* Override header's flex settings */
+        }
+
+        /* Main Sections */
+        section {
+            padding: 60px 20px;
+            margin-bottom: 0;
+        }
+        
+        section.bordered {
+             border-bottom: 1px solid #ddd;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+        
+        /* Center paragraph text in specific sections */
+        .act, .about {
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .act p, .about p {
+            margin-bottom: 30px;
+        }
+
+        section h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .history-segment, .subclause-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .history-item, .subclause-item {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            flex-basis: calc(33.333% - 20px);
+            min-width: 280px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        .history-item h3, .subclause-item h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Admissions */
+        .admissions {
+            background-color: #ecf0f1;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 0;
+        }
+        
+        .chart-wrapper {
+            margin: 50px auto;
+            max-width: 450px; /* Control the size of the chart */
+            text-align: center;
+        }
+        .chart-wrapper h3 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 50px 0 20px 0;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 20px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Merriweather', serif;
+            color: #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a, .footer-section a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover, .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        footer .social-media a {
+            margin-right: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        footer .social-media a:hover {
+            color: #f1c40f;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #3e5167;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Dark Mode Toggle Switch */
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+        }
+        input:checked + .slider {
+            background-color: #f1c40f;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* --- Dark Mode Styles --- */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode header, body.dark-mode footer {
+            background-color: #1a1a2e;
+        }
+        body.dark-mode .nav-links {
+            background-color: #2c3e50;
+        }
+        body.dark-mode .nav-links li:not(:last-child) {
+            border-bottom: 1px solid #3e5167;
+        }
+        body.dark-mode .history-item, body.dark-mode .subclause-item {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            border: 1px solid #333;
+        }
+        body.dark-mode section.bordered {
+            border-bottom: 1px solid #333;
+        }
+        body.dark-mode section h2 {
+            color: #f1c40f;
+        }
+        body.dark-mode .history-item h3, body.dark-mode .subclause-item h3 {
+            color: #f1c40f;
+        }
+        body.dark-mode .admissions {
+            background-color: #1e1e1e;
+        }
+        body.dark-mode .chart-wrapper h3 {
+            color: #f1c40f;
+        }
+        body.dark-mode .footer-bottom {
+            border-top: 1px solid #333;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+              <div class="logo">
+                  <img src="https://files.catbox.moe/wp3bhg.png" alt="Mythos University Logo">
+                  <h1>Mythos University</h1>
+              </div>
+            <nav>
+                <button class="menu-toggle" id="menu-toggle-button" aria-label="Open navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-links-list">
+                    <li><a href="#history">Monstrous History</a></li>
+                    <li><a href="#act">Preservation Clause</a></li>
+                    <li><a href="#subclauses">Protections</a></li>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li>
+                        <div class="theme-switch-container">
+                            <span>Dark Mode</span>
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>A New Era of Interspecies Academia</h2>
+            <p>Empowering the leaders of tomorrow through unparalleled education, unity and a commitment to preserving all forms of life while prioritizing the safety and comfort of the nonhumans in attendance.</p>
+            <a href="#about" class="cta-button">Discover Our Mission</a>
+            <a href="#admissions" class="cta-button secondary">Apply Now</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="history" class="history bordered">
+            <h2>A Brief History of Our World</h2>
+            <div class="history-segment">
+                <div class="history-item">
+                    <h3>The Age of Coexistence</h3>
+                    <p>Centuries ago, humans and non-humans lived in harmony. Societies were fully integrated, with fair trade, mutual respect, and relationships of all kinds existing between species without overt bias. Violence was seen as an individual act, not a species-wide trait.</p>
+                </div>
+                <div class="history-item">
+                    <h3>The Great Schism</h3>
+                    <p>About three centuries ago, an extremist group, "The True Keepers of Humanity," began spreading propaganda born from a theorized inferiority complex. This misinformation campaign successfully turned humans against their neighbors, leading to violent purges and forcing non-humans into hiding for over 200 years.</p>
+                </div>
+                <div class="history-item">
+                    <h3>The Age of Forgetting</h3>
+                    <p>With non-humans gone from public life, their existence faded into myth and folklore. The perpetrators of the Schism fell silent, and factual records were dismissed as fantasy. For generations, humanity lived unaware that the "monsters" in their stories were real and living in secrecy.</p>
+                </div>
+                <div class="history-item">
+                    <h3>The Revelation and the Clause</h3>
+                    <p>Over a century ago, a long-lived vampire, remembering the time of peace, revealed the truth of the non-human plight to the government. This brave act led to the Interspecies Preservation Clause, which granted official protection to all species and began the process of restoring a fragile peace.</p>
+                </div>
+                <div class="history-item">
+                    <h3>A New Foundation</h3>
+                    <p>Mythos University was founded upon the principles of this new era. It serves as a sanctuary and a beacon of hope, created to ensure the mistakes of the past are never forgotten and to forge a new, unified future where all species can once again learn and thrive together.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="act" class="act bordered">
+            <h2>The Interspecies Preservation Clause</h2>
+            <p>The Interspecies Preservation Clause is the cornerstone of modern law, guaranteeing fundamental rights, protections, and equality for all sentient species. It forms the ethical foundation of our curriculum and community. The act ensures that the biases of the past are never repeated.</p>
+            <a href="#full-act-document" class="cta-button">Read the Full Clause</a>
+        </section>
+
+        <section id="subclauses" class="subclauses bordered">
+            <h2>Interspecies Protection Sub-clause Summary</h2>
+            <div class="subclause-list">
+                <div class="subclause-item">
+                    <h3>Class 1: Verbal Offenses</h3>
+                    <p>The least severe violations, which exclusively involve verbal abuse. This includes bigotry, species-related insults, slurs, and non-violent harassment.</p>
+                </div>
+                <div class="subclause-item">
+                    <h3>Class 2: Non-Violent Stalking & Harassment</h3>
+                    <p>Covers non-violent stalking for physical, romantic, or platonic reasons. Punishments are heightened if the stalking involves property damage or breaking and entering.</p>
+                </div>
+                <div class="subclause-item">
+                    <h3>Class 3: Minor to Moderate Physical Harm</h3>
+                    <p>Involves inflicting minor-to-moderate physical harm without premeditation. Injuries include bruising, cuts, welts, and sprains that require medical treatment.</p>
+                </div>
+                 <div class="subclause-item">
+                    <h3>Class 4: Severe Harm & Involuntary Manslaughter</h3>
+                    <p>Covers premeditated violence causing moderate injuries, unplanned violence causing severe harm (e.g., broken bones, burns), and involuntary manslaughter.</p>
+                </div>
+                <div class="subclause-item">
+                    <h3>Class 5: Premeditated Murder & Mass Casualty</h3>
+                    <p>The most severe class. This includes premeditated murder, unplanned mass casualty events, or any murder involving torture or excessive cruelty.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>Our Mission</h2>
+            <p>Founded as a beacon of knowledge and diplomacy, Mythos University's mission is to be at the forefront of education for non-human and human beings alike. We foster an environment of rigorous academic inquiry, cross-species collaboration, and mutual respect to address the world's most complex challenges.</p>
+        </section>
+    </main>
+    
+    <section id="admissions" class="admissions">
+        <h2>Admissions & Demographics</h2>
+        <p>Your journey begins here. We welcome applications from all sentient species who demonstrate intellectual curiosity and a commitment to interspecies cooperation. Our acceptance rates reflect our mission to rebuild and prioritize the non-human communities that were once displaced.</p>
+        
+        <div class="chart-wrapper">
+            <h3>Student Body Demographics</h3>
+            <canvas id="speciesDemographicsChart"></canvas>
+        </div>
+
+        <a href="#admission-form" class="cta-button">Begin Your Application</a>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#history">University History</a></li>
+                    <li><a href="#act">Preservation Clause</a></li>
+                    <li><a href="#admissions">Admissions & Aid</a></li>
+                    <li><a href="#">Campus Map</a></li>
+                    <li><a href="#">Events Calendar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>1 Mythos Plaza, The Crossroads<br>Seattle, WA 98101<br>United States of America</p>
+                <p><strong>Email:</strong> <a href="mailto:info@mythosuniversity.edu">info@mythosuniversity.edu</a></p>
+                <p><strong>Phone:</strong> 1-800-MYT-HOS1</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Connect with the community.</p>
+                <div class="social-media">
+                    <a href="https://janitorai.com/profiles/935b90dc-d835-42d9-ae18-da7d49b0fe33_profile-of-xoxohni" target="_blank" title="JanitorAI">JanitorAI</a>
+                    <a href="https://discord.gg/WFsQnvnQ4w" target="_blank" title="Discord Server">Discord Server</a>                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mythos University. All Rights Reserved. For a unified tomorrow.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let speciesDemographicsChart; // Make chart instance globally accessible
+
+            // Function to create/update the single chart based on the theme
+            function renderDemographicsChart(theme) {
+                const canvas = document.getElementById('speciesDemographicsChart');
+                if (!canvas) return;
+                
+                // Destroy the existing chart if it exists to prevent rendering issues
+                if (speciesDemographicsChart) {
+                    speciesDemographicsChart.destroy();
+                }
+
+                // Define colors and data
+                const labelColor = theme === 'dark' ? '#e0e0e0' : '#333';
+                const chartBgColor = theme === 'dark' ? '#1e1e1e' : '#ecf0f1';
+                const speciesData = {
+                    labels: ['Vampires', 'Shifters', 'Mages', 'Other Species', 'Humans'],
+                    datasets: [{
+                        label: 'Student Demographics',
+                        data: [24, 18, 25, 30, 3], // Data representing percentages
+                        backgroundColor: [
+                            '#c0392b', // Red - Vampires
+                            '#e67e22', // Orange - Shifters
+                            '#3498db', // Blue - Mages
+                            '#8e44ad', // Purple - Other
+                            '#f1c40f'  // Gold - Humans
+                        ],
+                        borderColor: chartBgColor,
+                        borderWidth: 4
+                    }]
+                };
+                // Chart options
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '60%', // Makes it a doughnut chart
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: labelColor,
+                                font: {
+                                    size: 14,
+                                    family: "'Roboto', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                };
+
+                // Create new chart instance
+                speciesDemographicsChart = new Chart(canvas, {
+                    type: 'doughnut',
+                    data: speciesData,
+                    options: chartOptions
+                });
+            }
+
+            // --- Script for Dropdown Menu ---
+            const menuToggle = document.getElementById('menu-toggle-button');
+            const navLinks = document.getElementById('nav-links-list');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close the menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Close dropdown if clicked outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideNav = menuToggle.contains(event.target) || navLinks.contains(event.target);
+                if (!isClickInsideNav && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // --- Script for Theme Switcher ---
+            const toggleSwitch = document.querySelector('#checkbox');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    toggleSwitch.checked = true;
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    toggleSwitch.checked = false;
+                }
+                localStorage.setItem('theme', theme);
+                // Re-render the chart with new theme colors
+                renderDemographicsChart(theme); 
+            }
+
+            // Set initial theme
+            setTheme(currentTheme);
+
+            // Add event listener for the toggle switch
+            toggleSwitch.addEventListener('change', function(e) {
+                setTheme(e.target.checked ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>
