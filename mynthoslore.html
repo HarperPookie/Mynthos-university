@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The History of Our World - Mythos University</title>
+    <style>
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+        /* General Styles - Copied from Main Page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container - Copied from Main Page */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        main.container {
+             display: block;
+        }
+
+        /* Header - Copied from Main Page */
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 4px 2px -2px gray;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        header .logo {
+          display: flex;
+          align-items: center;
+        }
+
+        header .logo img {
+            height: 250px;
+            margin-right: 15px;
+        }
+
+        header .logo h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        /* Navigation Menu - Copied from Main Page */
+        nav {
+            position: relative;
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-links {
+            display: none;
+            list-style-type: none;
+            position: absolute;
+            top: calc(100% + 15px);
+            right: 0;
+            background: #154575;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 280px;
+            padding: 10px 20px;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .nav-links li {
+            padding: 15px 0;
+        }
+
+        .nav-links li:not(:last-child) {
+            border-bottom: 1px solid #4a627a;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .nav-links li a:hover {
+            color: #f1c40f;
+        }
+
+        .theme-switch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Main Section Styling */
+        section {
+            padding: 60px 20px;
+        }
+
+        section h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        /* Detailed Lore Paragraph Styling */
+        .lore-prose {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .lore-prose h3 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            padding-bottom: 0.25em;
+            border-bottom: 1px solid #ccc;
+        }
+        .lore-prose h3:first-child {
+            margin-top: 0;
+        }
+        .lore-prose p {
+            margin-bottom: 1.5em;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Footer - Copied from Main Page */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 50px 0 20px 0;
+            margin-top: 60px;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 20px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Merriweather', serif;
+            color: #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #3e5167;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Theme Switcher - Copied from Main Page */
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+        .theme-switch input { display:none; }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+        }
+        input:checked + .slider { background-color: #f1c40f; }
+        input:checked + .slider:before { transform: translateX(26px); }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
+
+        /* Dark Mode - Copied from Main Page */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode header, body.dark-mode footer {
+            background-color: #1a1a2e;
+        }
+        body.dark-mode .nav-links {
+            background-color: #2c3e50;
+        }
+        body.dark-mode .nav-links li:not(:last-child) {
+            border-bottom-color: #3e5167;
+        }
+        body.dark-mode section h2, 
+        body.dark-mode .lore-prose h3 {
+            color: #f1c40f;
+        }
+        body.dark-mode .lore-prose h3 {
+            border-bottom-color: #333;
+        }
+        body.dark-mode .footer-bottom {
+            border-top-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://files.catbox.moe/wp3bhg.png" alt="Mythos University Logo">
+                <h1>Mythos Archives</h1>
+            </div>
+            <nav>
+                <button class="menu-toggle" id="menu-toggle-button" aria-label="Open navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-links-list">
+                    <li><a href="#history">Monstrous History</a></li>
+                    <li><a href="#act">Preservation Act</a></li>
+                    <li><a href="#subclauses">Protection Sub-clauses</a></li>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li>
+                        <div class="theme-switch-container">
+                            <span>Dark Mode</span>
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox" />
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>The History of Our World</h2>
+            <div class="lore-prose">
+                <h3 id="harmony">The Age of Harmony</h3>
+                <p>Centuries ago, our world was one of profound unity. Humans and non-humans lived not just in proximity, but in a state of deep, harmonious intermingling that had defined existence for millennia. Relationships, trade, and daily life flowed seamlessly between all species, free from the stain of overt bias. This was an era of fair exchange where a vampire might purchase blood from a willing donor, while a human might commission a giant for tasks requiring impossible strength.</p>
+                
+                <h3 id="schism">The Great Schism</h3>
+                <p>Approximately three centuries ago, this peace was shattered by "The True Keepers of Humanity," an extremist group aiming to eradicate all non-humans. Through propaganda, they stoked fear and paranoia. Within two short years, their campaign of hate turned neighbor against neighbor, forcing non-humans to flee and hide, their voices silenced by the sheer numbers and advancing weaponry of humanity.</p>
+                
+                <h3 id="lost">The Lost Centuries</h3>
+                <p>As decades passed, the True Keepers disbanded. The purge was forgotten, and the existence of non-humans was erased from memory, relegated to folklore. Factual records were dismissed as fantasy. In the shadows, however, non-humans survived, with a brave few even managing to integrate back into society, disguising their true nature.</p>
+
+                <h3 id="reconciliation">The Reconciliation</h3>
+                <p>Over a century ago, a vampire who had lived through the old age revealed the forgotten history to the government. His testimony led to the creation of The Interspecies Preservation Clause, reintroducing non-humans to the world with full protection. A fragile peace was restored, a peace that has grown more secure with each passing year, paving the way for a new, unified future.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">University History</a></li>
+                    <li><a href="#">Preservation Act</a></li>
+                    <li><a href="#">Admissions & Aid</a></li>
+                    <li><a href="#">Campus Map</a></li>
+                    <li><a href="#">Events Calendar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>1 Mythos Plaza,<br>The Crossroads, 90210</p>
+                <p><strong>Email:</strong> <a href="mailto:info@mythosuniversity.edu">info@mythosuniversity.edu</a></p>
+                <p><strong>Phone:</strong> 1-800-MYT-HOS1</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Connect with the community.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Mythos University. All Rights Reserved. For a unified tomorrow.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Script for Dropdown Menu ---
+        const menuToggle = document.getElementById('menu-toggle-button');
+        const navLinks = document.getElementById('nav-links-list');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                // Don't close for external links
+                if (link.getAttribute('href').startsWith('#')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // --- Script for Theme Switcher ---
+        const toggleSwitch = document.querySelector('#checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleSwitch.checked = true;
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggleSwitch.checked = false;
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        if (currentTheme) {
+            setTheme(currentTheme);
+        } else {
+            setTheme('light'); 
+        }
+        toggleSwitch.addEventListener('change', function(e) {
+            setTheme(e.target.checked ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
